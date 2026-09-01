@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DRM-IA | Automatización con IA para tu negocio</title>
+<style>
+  /* ============================================
+     RESET BÁSICO Y VARIABLES DE DISEÑO
+     ============================================ */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --color-fondo: #f7f8fa;
+    --color-fondo-alterno: #ffffff;
+    --color-texto: #1f2430;
+    --color-texto-suave: #5a6172;
+    --color-primario: #2f5d50;
+    --color-primario-claro: #e8f0ee;
+    --color-acento: #d98e3a;
+    --color-borde: #e2e5ea;
+    --radio: 12px;
+    --max-ancho: 960px;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    line-height: 1.6;
+  }
+
+  img {
+    max-width: 100%;
+    display: block;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  /* ============================================
+     CONTENEDOR GENERAL DE SECCIONES
+     ============================================ */
+  section {
+    padding: 64px 20px;
+  }
+
+  .contenedor {
+    max-width: var(--max-ancho);
+    margin: 0 auto;
+  }
+
+  .fondo-alterno {
+    background-color: var(--color-fondo-alterno);
+    border-top: 1px solid var(--color-borde);
+    border-bottom: 1px solid var(--color-borde);
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    margin-bottom: 16px;
+    color: var(--color-primario);
+  }
+
+  p.texto-placeholder {
+    color: var(--color-texto-suave);
+    font-size: 1.05rem;
+    max-width: 680px;
+  }
+
+  /* ============================================
+     ENCABEZADO / HEADER
+     ============================================ */
+  header {
+    background-color: var(--color-primario);
+    color: #ffffff;
+    padding: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .header-contenido {
+    max-width: var(--max-ancho);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .header-nombre {
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+
+  .header-nombre span {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 400;
+    opacity: 0.85;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  nav a {
+    text-decoration: none;
+    font-size: 0.9rem;
+    color: #ffffff;
+    opacity: 0.9;
+  }
+
+  nav a:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+
+  /* ============================================
+     SECCIÓN PRINCIPAL / HERO (Presentación)
+     ============================================ */
+  .hero {
+    text-align: center;
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  .hero h1 {
+    font-size: 2.3rem;
+    color: var(--color-primario);
+    margin-bottom: 18px;
+  }
+
+  .hero p.texto-placeholder {
+    margin: 0 auto 28px auto;
+  }
+
+  /* ============================================
+     BOTÓN DE LLAMADA A LA ACCIÓN (CTA)
+     ============================================ */
+  .boton-cta {
+    display: inline-block;
+    background-color: var(--color-acento);
+    color: #ffffff;
+    padding: 14px 32px;
+    border-radius: var(--radio);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .boton-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(217, 142, 58, 0.35);
+  }
+
+  /* ============================================
+     PARA QUIÉN / TARJETAS
+     ============================================ */
+  .tarjetas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 24px;
+  }
+
+  .tarjeta {
+    background-color: var(--color-primario-claro);
+    border-radius: var(--radio);
+    padding: 22px;
+  }
+
+  .tarjeta h3 {
+    color: var(--color-primario);
+    margin-bottom: 8px;
+    font-size: 1.05rem;
+  }
+
+  .tarjeta p {
+    color: var(--color-texto-suave);
+    font-size: 0.95rem;
+  }
+
+  /* ============================================
+     DEMO (CAJA VACÍA)
+     ============================================ */
+  .caja-demo {
+    margin-top: 24px;
+    border: 2px dashed var(--color-borde);
+    border-radius: var(--radio);
+    min-height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-fondo);
+  }
+
+  .caja-demo p {
+    color: var(--color-texto-suave);
+    font-style: italic;
+  }
+
+  /* ============================================
+     CÓMO TRABAJO / PASOS
+     ============================================ */
+  .pasos {
+    counter-reset: paso;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 24px;
+  }
+
+  .paso {
+    background-color: var(--color-fondo);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio);
+    padding: 22px;
+    position: relative;
+  }
+
+  .paso::before {
+    counter-increment: paso;
+    content: counter(paso);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--color-primario);
+    color: #ffffff;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .paso h3 {
+    color: var(--color-primario);
+    font-size: 1rem;
+    margin-bottom: 6px;
+  }
+
+  .paso p {
+    color: var(--color-texto-suave);
+    font-size: 0.92rem;
+  }
+
+  /* ============================================
+     PREGUNTAS FRECUENTES (ACORDEÓN)
+     ============================================ */
+  .acordeon {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .pregunta {
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio);
+    overflow: hidden;
+    background-color: var(--color-fondo-alterno);
+  }
+
+  .pregunta-boton {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 18px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-texto);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .pregunta-boton .icono {
+    font-size: 1.2rem;
+    color: var(--color-primario);
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .pregunta-boton[aria-expanded="true"] .icono {
+    transform: rotate(45deg);
+  }
+
+  .pregunta-respuesta {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease;
+    padding: 0 20px;
+  }
+
+  .pregunta-respuesta p {
+    color: var(--color-texto-suave);
+    font-size: 0.95rem;
+    padding-bottom: 18px;
+  }
+
+  /* ============================================
+     SECCIÓN FINAL DE CONTACTO / CTA
+     ============================================ */
+  .cta-final {
+    text-align: center;
+    background-color: var(--color-primario);
+    color: #ffffff;
+  }
+
+  .cta-final h2 {
+    color: #ffffff;
+  }
+
+  .cta-final p.texto-placeholder {
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0 auto 28px auto;
+  }
+
+  /* ============================================
+     PIE DE PÁGINA
+     ============================================ */
+  footer {
+    text-align: center;
+    padding: 24px 20px;
+    font-size: 0.85rem;
+    color: var(--color-texto-suave);
+  }
+
+  /* ============================================
+     RESPONSIVE: CELULARES
+     ============================================ */
+  @media (max-width: 600px) {
+    .header-contenido {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    nav ul {
+      gap: 12px;
+    }
+
+    .hero h1 {
+      font-size: 1.7rem;
+    }
+
+    section {
+      padding: 48px 16px;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ============================================
+       HEADER: nombre y navegación por anclas
+       ============================================ -->
+  <header>
+    <div class="header-contenido">
+      <div class="header-nombre">
+        Dionicio Rafael
+        <span>DRM-IA · Automatización con Inteligencia Artificial</span>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#presentacion">Presentación</a></li>
+          <li><a href="#para-quien">Para quién</a></li>
+          <li><a href="#demo">Demo</a></li>
+          <li><a href="#como-trabajo">Cómo trabajo</a></li>
+          <li><a href="#presupuesto">Presupuesto</a></li>
+          <li><a href="#faq">Preguntas frecuentes</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============================================
+       PRESENTACIÓN: sección principal / hero
+       ============================================ -->
+  <section id="presentacion" class="hero">
+    <div class="contenedor">
+      <h1>Automatizo tu negocio con herramientas de Inteligencia Artificial</h1>
+      <p class="texto-placeholder">
+        Texto de presentación (placeholder). Acá va una breve introducción sobre quién soy,
+        qué hago y cómo ayudo a negocios y profesionales a ordenar sus procesos comerciales
+        usando automatización e IA, sin que tengan que aprender nada técnico.
+      </p>
+      <a href="#reunion" class="boton-cta">Agendá una reunión de 20 minutos</a>
+    </div>
+  </section>
+
+  <!-- ============================================
+       PARA QUIÉN: a quién está dirigido el servicio
+       ============================================ -->
+  <section id="para-quien" class="fondo-alterno">
+    <div class="contenedor">
+      <h2>Para quién</h2>
+      <p class="texto-placeholder">
+        Texto placeholder: descripción general de los tipos de negocios o profesionales
+        a los que está dirigido el servicio.
+      </p>
+      <div class="tarjetas">
+        <div class="tarjeta">
+          <h3>Perfil 1 (placeholder)</h3>
+          <p>Descripción breve de este tipo de cliente y su necesidad principal.</p>
+        </div>
+        <div class="tarjeta">
+          <h3>Perfil 2 (placeholder)</h3>
+          <p>Descripción breve de este tipo de cliente y su necesidad principal.</p>
+        </div>
+        <div class="tarjeta">
+          <h3>Perfil 3 (placeholder)</h3>
+          <p>Descripción breve de este tipo de cliente y su necesidad principal.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       DEMO: caja vacía para completar más adelante
+       ============================================ -->
+  <section id="demo">
+    <div class="contenedor">
+      <h2>Demo</h2>
+      <p class="texto-placeholder">
+        Texto placeholder: acá se va a mostrar una demostración en vivo o un video
+        de alguna automatización funcionando.
+      </p>
+      <div class="caja-demo">
+        <p>Espacio reservado para la demo (imagen, video o ejemplo interactivo)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       CÓMO TRABAJO: pasos del proceso
+       ============================================ -->
+  <section id="como-trabajo" class="fondo-alterno">
+    <div class="contenedor">
+      <h2>Cómo trabajo</h2>
+      <p class="texto-placeholder">
+        Texto placeholder: explicación general del proceso, desde el primer contacto
+        hasta la entrega de la automatización funcionando.
+      </p>
+      <div class="pasos">
+        <div class="paso">
+          <h3>Paso 1 (placeholder)</h3>
+          <p>Descripción breve de esta etapa del proceso de trabajo.</p>
+        </div>
+        <div class="paso">
+          <h3>Paso 2 (placeholder)</h3>
+          <p>Descripción breve de esta etapa del proceso de trabajo.</p>
+        </div>
+        <div class="paso">
+          <h3>Paso 3 (placeholder)</h3>
+          <p>Descripción breve de esta etapa del proceso de trabajo.</p>
+        </div>
+        <div class="paso">
+          <h3>Paso 4 (placeholder)</h3>
+          <p>Descripción breve de esta etapa del proceso de trabajo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       CÓMO SE ARMA UN PRESUPUESTO (sin precios)
+       ============================================ -->
+  <section id="presupuesto">
+    <div class="contenedor">
+      <h2>Cómo se arma un presupuesto</h2>
+      <p class="texto-placeholder">
+        Texto placeholder: explicación de qué información se necesita del cliente
+        y qué factores se tienen en cuenta para armar una propuesta a medida
+        (sin mencionar montos ni precios en esta versión).
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================
+       PREGUNTAS FRECUENTES: acordeón con JS
+       ============================================ -->
+  <section id="faq" class="fondo-alterno">
+    <div class="contenedor">
+      <h2>Preguntas frecuentes</h2>
+      <p class="texto-placeholder">
+        Texto placeholder: respuestas a las dudas más comunes antes de empezar a trabajar juntos.
+      </p>
+      <div class="acordeon">
+
+        <div class="pregunta">
+          <button class="pregunta-boton" aria-expanded="false">
+            ¿Pregunta frecuente 1? (placeholder)
+            <span class="icono">+</span>
+          </button>
+          <div class="pregunta-respuesta">
+            <p>Texto placeholder de la respuesta a la primera pregunta frecuente.</p>
+          </div>
+        </div>
+
+        <div class="pregunta">
+          <button class="pregunta-boton" aria-expanded="false">
+            ¿Pregunta frecuente 2? (placeholder)
+            <span class="icono">+</span>
+          </button>
+          <div class="pregunta-respuesta">
+            <p>Texto placeholder de la respuesta a la segunda pregunta frecuente.</p>
+          </div>
+        </div>
+
+        <div class="pregunta">
+          <button class="pregunta-boton" aria-expanded="false">
+            ¿Pregunta frecuente 3? (placeholder)
+            <span class="icono">+</span>
+          </button>
+          <div class="pregunta-respuesta">
+            <p>Texto placeholder de la respuesta a la tercera pregunta frecuente.</p>
+          </div>
+        </div>
+
+        <div class="pregunta">
+          <button class="pregunta-boton" aria-expanded="false">
+            ¿Pregunta frecuente 4? (placeholder)
+            <span class="icono">+</span>
+          </button>
+          <div class="pregunta-respuesta">
+            <p>Texto placeholder de la respuesta a la cuarta pregunta frecuente.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       CTA FINAL: botón de reunión
+       ============================================ -->
+  <section id="reunion" class="cta-final">
+    <div class="contenedor">
+      <h2>¿Hablamos?</h2>
+      <p class="texto-placeholder">
+        Texto placeholder: invitación final a agendar una reunión corta y sin compromiso
+        para ver cómo la automatización puede ayudar a tu negocio.
+      </p>
+      <a href="#" class="boton-cta" id="boton-reunion">Agendá una reunión de 20 minutos</a>
+    </div>
+  </section>
+
+  <!-- ============================================
+       PIE DE PÁGINA
+       ============================================ -->
+  <footer>
+    <p>DRM-IA — Dionicio Rafael Martin · Río Gallegos, Santa Cruz</p>
+  </footer>
+
+  <!-- ============================================
+       JAVASCRIPT: acordeón de preguntas frecuentes
+       No usa librerías externas ni conexiones a servidores.
+       ============================================ -->
+  <script>
+    // Buscamos todos los botones de preguntas del acordeón
+    var botonesPregunta = document.querySelectorAll('.pregunta-boton');
+
+    botonesPregunta.forEach(function (boton) {
+      boton.addEventListener('click', function () {
+        var respuesta = boton.nextElementSibling;
+        var estaAbierta = boton.getAttribute('aria-expanded') === 'true';
+
+        // Cerramos todas las demás respuestas antes de abrir la actual
+        botonesPregunta.forEach(function (otroBoton) {
+          otroBoton.setAttribute('aria-expanded', 'false');
+          otroBoton.nextElementSibling.style.maxHeight = null;
+        });
+
+        // Si la pregunta clickeada estaba cerrada, la abrimos
+        if (!estaAbierta) {
+          boton.setAttribute('aria-expanded', 'true');
+          respuesta.style.maxHeight = respuesta.scrollHeight + 'px';
+        }
+      });
+    });
+
+    // Nota: el link de "Agendá una reunión de 20 minutos" todavía no
+    // tiene destino (se conecta más adelante, por ejemplo a Calendly).
+    // Por ahora solo funciona como ancla de ejemplo dentro de la página.
+  </script>
+
+</body>
+</html>
