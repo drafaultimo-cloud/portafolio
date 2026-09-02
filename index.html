@@ -165,6 +165,36 @@
     color: var(--color-texto);
   }
 
+  .comparacion .tarjeta ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .comparacion .tarjeta li {
+    color: var(--color-texto-suave);
+    font-size: 1.05rem;
+    padding-left: 18px;
+    position: relative;
+  }
+
+  .comparacion .tarjeta.si li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--color-primario);
+    font-weight: 700;
+  }
+
+  .comparacion .tarjeta.no li::before {
+    content: "✕";
+    position: absolute;
+    left: 0;
+    color: #b0555a;
+    font-weight: 700;
+  }
+
   /* ============================================
      DEMO: CAJA VACÍA (placeholder visual)
      ============================================ */
@@ -339,8 +369,8 @@
   <header class="hero">
     <div class="contenedor">
       <span class="marca">DRM-IA · Dionicio Rafael</span>
-      <h1>Soy Dionicio, de DRM-IA, y armo herramientas simples para que tu consultorio no dependa de tu memoria.</h1>
-      <p>Una agenda que le avisa el turno al paciente sola, y una ficha con todos sus datos en un solo lugar.</p>
+      <h1>Te armo una agenda con recordatorios automáticos por WhatsApp y una ficha digital de cada paciente, para que ningún turno se pierda por falta de aviso.</h1>
+      <p>Pensado para nutricionistas y profesionales de consultorio que atienden solos y no dan abasto organizando turnos y datos.</p>
     </div>
   </header>
 
@@ -365,8 +395,8 @@
   <section id="quien-soy">
     <div class="contenedor">
       <h2>Quién soy y qué ofrezco</h2>
-      <p>Soy Dionicio, de DRM-IA, y armo herramientas simples para que tu consultorio no dependa de tu memoria.</p>
-      <p>Una agenda que le avisa el turno al paciente sola, y una ficha con todos sus datos en un solo lugar.</p>
+      <p>Soy Dionicio Rafael Martin, de DRM-IA. Ayudo a profesionales de la salud a ordenar su consultorio con herramientas simples de automatización, sin que tengan que aprender nada técnico.</p>
+      <p>Te entrego una agenda con recordatorios automáticos que avisa el turno por WhatsApp, y una ficha de cliente digital con los datos, el historial y las notas de cada paciente en un solo lugar, conectada a esa misma agenda.</p>
     </div>
   </section>
 
@@ -379,11 +409,19 @@
       <div class="comparacion">
         <div class="tarjeta si">
           <strong>Es para vos si...</strong>
-          <p>Atendés solo/a y se te complica organizar turnos y guardar los datos de cada paciente.</p>
+          <ul>
+            <li>Sos nutricionista u otro profesional de consultorio y atendés pacientes por tu cuenta.</li>
+            <li>Se te complica organizar los turnos y mantener el historial de cada paciente al día.</li>
+            <li>Querés bajar las inasistencias sin tener que estar recordándole el turno vos mismo/a.</li>
+          </ul>
         </div>
         <div class="tarjeta no">
           <strong>No es para vos si...</strong>
-          <p>Ya tenés un consultorio grande con un sistema armado y funcionando bien.</p>
+          <ul>
+            <li>Ya tenés una agenda y una ficha de pacientes funcionando bien.</li>
+            <li>Trabajás en un centro grande con recepción y sistema propio armado.</li>
+            <li>Buscás algo armado en un día: esto se arma a medida, en 1 a 2 semanas.</li>
+          </ul>
         </div>
       </div>
     </div>
