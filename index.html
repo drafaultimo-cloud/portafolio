@@ -196,21 +196,174 @@
   }
 
   /* ============================================
-     DEMO: CAJA VACÍA (placeholder visual)
+     DEMO INTERACTIVA: antes / probar / después
      ============================================ */
-  .demo-caja {
-    margin-top: 20px;
-    border: 2px dashed var(--color-borde);
-    border-radius: var(--radio);
-    background-color: var(--color-fondo);
-    min-height: 220px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .demo-frase {
+    font-size: 1.02rem;
     color: var(--color-texto-suave);
+    background-color: var(--color-fondo);
+    border-left: 4px solid var(--color-primario);
+    padding: 14px 18px;
+    border-radius: 8px;
+    margin: 16px 0;
+  }
+
+  .demo-frase.despues {
+    border-left-color: var(--color-acento);
+    color: var(--color-texto);
+  }
+
+  .demo-frase strong {
+    color: var(--color-texto);
+  }
+
+  .demo-widget {
+    margin-top: 8px;
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio);
+    background-color: var(--color-fondo-alterno);
+    padding: 22px;
+  }
+
+  .demo-paso {
+    margin-bottom: 20px;
+  }
+
+  .demo-paso:last-child {
+    margin-bottom: 0;
+  }
+
+  .demo-paso h3 {
+    font-size: 1rem;
+    color: var(--color-texto);
+    margin-bottom: 10px;
+  }
+
+  .demo-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .demo-chip {
+    border: 1px solid var(--color-borde);
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    padding: 9px 16px;
+    border-radius: 999px;
     font-size: 0.95rem;
-    text-align: center;
-    padding: 24px;
+    cursor: pointer;
+  }
+
+  .demo-chip:hover {
+    border-color: var(--color-primario);
+  }
+
+  .demo-chip.activo {
+    background-color: var(--color-primario);
+    border-color: var(--color-primario);
+    color: #ffffff;
+  }
+
+  .demo-chip.ocupado {
+    opacity: 0.45;
+    cursor: not-allowed;
+    text-decoration: line-through;
+  }
+
+  .demo-chip.ocupado:hover {
+    border-color: var(--color-borde);
+  }
+
+  .demo-confirmar {
+    background-color: var(--color-primario);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 22px;
+    font-size: 0.98rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .demo-confirmar:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .demo-confirmar:hover:not(:disabled) {
+    opacity: 0.92;
+  }
+
+  .demo-resultado {
+    margin-top: 22px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  .demo-resultado h4 {
+    font-size: 0.95rem;
+    color: var(--color-primario);
+    margin-bottom: 10px;
+  }
+
+  .demo-agenda ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .demo-agenda li {
+    background-color: var(--color-fondo);
+    border: 1px solid var(--color-borde);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 0.92rem;
+    color: var(--color-texto-suave);
+  }
+
+  .demo-agenda li strong {
+    color: var(--color-texto);
+  }
+
+  .whatsapp-burbuja {
+    background-color: #dcf8c6;
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 0.9rem;
+    color: #1f2430;
+    max-width: 280px;
+  }
+
+  .whatsapp-burbuja .hora {
+    display: block;
+    text-align: right;
+    font-size: 0.72rem;
+    color: #5a6172;
+    margin-top: 6px;
+  }
+
+  .demo-reiniciar {
+    background: none;
+    border: none;
+    color: var(--color-primario);
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-top: 14px;
+    padding: 0;
+  }
+
+  .demo-boton {
+    margin-top: 18px;
+  }
+
+  @media (max-width: 640px) {
+    .demo-resultado {
+      grid-template-columns: 1fr;
+    }
   }
 
   /* ============================================
@@ -433,13 +586,55 @@
   <section id="demo">
     <div class="contenedor">
       <h2>Demo: antes y después</h2>
-      <p>Antes: planillas sueltas, mensajes de WhatsApp perdidos, pacientes que faltan sin avisar.</p>
-      <p>Después: el turno se recuerda solo y toda la info del paciente está a un clic.</p>
 
-      <!-- Caja vacía: acá va la demo visual (video, gif o captura) más adelante -->
-      <div class="demo-caja">
-        Acá va la demo (video o capturas de la agenda y la ficha de paciente)
+      <!-- Frase 1: el "antes", el caos habitual del consultorio -->
+      <p class="demo-frase">
+        <strong>Antes:</strong> "El turno era el jueves… no, esperá, ¿no lo habíamos pasado al viernes? No sé si le avisé." Mensajes sueltos de WhatsApp y una libreta con turnos tachados.
+      </p>
+
+      <!-- Widget interactivo: el visitante elige día y horario, y ve cómo queda la agenda + el recordatorio -->
+      <div class="demo-widget">
+        <div class="demo-paso">
+          <h3>1. Elegí un día para el turno</h3>
+          <div class="demo-chips" id="demoDias">
+            <button type="button" class="demo-chip" data-dia="Martes 8/9">Martes 8/9</button>
+            <button type="button" class="demo-chip" data-dia="Jueves 10/9">Jueves 10/9</button>
+            <button type="button" class="demo-chip" data-dia="Viernes 11/9">Viernes 11/9</button>
+          </div>
+        </div>
+
+        <div class="demo-paso" id="demoPasoHorario" hidden>
+          <h3>2. Elegí un horario disponible</h3>
+          <div class="demo-chips" id="demoHorarios"></div>
+        </div>
+
+        <div class="demo-paso" id="demoPasoConfirmar" hidden>
+          <h3>3. Confirmá el turno</h3>
+          <p style="margin-bottom: 14px;">Paciente de ejemplo: <strong id="demoPaciente">Marcela Gómez</strong></p>
+          <button type="button" class="demo-confirmar" id="demoConfirmar">Confirmar turno</button>
+        </div>
+
+        <div class="demo-resultado" id="demoResultado" hidden>
+          <div class="demo-agenda">
+            <h4>Tu agenda</h4>
+            <ul id="demoListaAgenda"></ul>
+          </div>
+          <div class="demo-whatsapp">
+            <h4>Recordatorio automático (WhatsApp)</h4>
+            <div class="whatsapp-burbuja" id="demoWhatsapp"></div>
+          </div>
+        </div>
+
+        <button type="button" class="demo-reiniciar" id="demoReiniciar" hidden>Probar de nuevo</button>
       </div>
+
+      <!-- Frase 2: el "después", una vez confirmado el turno en la demo -->
+      <p class="demo-frase despues" id="demoDespues" hidden>
+        <strong>Después:</strong> el turno quedó anotado solo, ordenado en tu agenda, y Marcela ya sabe cuándo tiene que venir sin que vos le escribas.
+      </p>
+
+      <!-- Botón al final de la demo -->
+      <a href="#reunion" class="boton-cta demo-boton" id="demoBotonCTA" hidden>¿Lo ves claro? Agendá 20 minutos y te armo la versión para tu negocio</a>
     </div>
   </section>
 
@@ -542,5 +737,141 @@
     });
   </script>
 
+  <script>
+    // ============================================
+    // DEMO INTERACTIVA: antes / probar / después
+    // Datos de ejemplo, todo en el navegador, sin servidor ni API.
+    // ============================================
+    (function () {
+      var horariosPorDia = {
+        "Martes 8/9": [
+          { hora: "09:00", ocupado: false },
+          { hora: "10:30", ocupado: true },
+          { hora: "16:00", ocupado: false }
+        ],
+        "Jueves 10/9": [
+          { hora: "09:30", ocupado: true },
+          { hora: "11:00", ocupado: false },
+          { hora: "15:30", ocupado: false }
+        ],
+        "Viernes 11/9": [
+          { hora: "10:00", ocupado: false },
+          { hora: "12:00", ocupado: true },
+          { hora: "17:00", ocupado: false }
+        ]
+      };
+
+      var paciente = "Marcela Gómez";
+      var diaElegido = null;
+      var horaElegida = null;
+
+      var elDias = document.getElementById('demoDias');
+      var elPasoHorario = document.getElementById('demoPasoHorario');
+      var elHorarios = document.getElementById('demoHorarios');
+      var elPasoConfirmar = document.getElementById('demoPasoConfirmar');
+      var elConfirmar = document.getElementById('demoConfirmar');
+      var elResultado = document.getElementById('demoResultado');
+      var elListaAgenda = document.getElementById('demoListaAgenda');
+      var elWhatsapp = document.getElementById('demoWhatsapp');
+      var elDespues = document.getElementById('demoDespues');
+      var elBotonCTA = document.getElementById('demoBotonCTA');
+      var elReiniciar = document.getElementById('demoReiniciar');
+
+      if (!elDias) {
+        return; // esta página no tiene la demo, no hace nada
+      }
+
+      function limpiarActivos(contenedor) {
+        var chips = contenedor.querySelectorAll('.demo-chip');
+        for (var i = 0; i < chips.length; i++) {
+          chips[i].classList.remove('activo');
+        }
+      }
+
+      function renderHorarios(dia) {
+        elHorarios.innerHTML = '';
+        var lista = horariosPorDia[dia] || [];
+        lista.forEach(function (item) {
+          var boton = document.createElement('button');
+          boton.type = 'button';
+          boton.className = 'demo-chip' + (item.ocupado ? ' ocupado' : '');
+          boton.textContent = item.ocupado ? item.hora + ' (ocupado)' : item.hora;
+          if (!item.ocupado) {
+            boton.addEventListener('click', function () {
+              horaElegida = item.hora;
+              limpiarActivos(elHorarios);
+              boton.classList.add('activo');
+              elPasoConfirmar.hidden = false;
+              elConfirmar.disabled = false;
+            });
+          }
+          elHorarios.appendChild(boton);
+        });
+      }
+
+      // Paso 1: elegir día
+      var botonesDia = elDias.querySelectorAll('.demo-chip');
+      for (var i = 0; i < botonesDia.length; i++) {
+        botonesDia[i].addEventListener('click', function (evento) {
+          diaElegido = evento.currentTarget.getAttribute('data-dia');
+          horaElegida = null;
+
+          limpiarActivos(elDias);
+          evento.currentTarget.classList.add('activo');
+
+          elPasoHorario.hidden = false;
+          elPasoConfirmar.hidden = true;
+          elResultado.hidden = true;
+          elDespues.hidden = true;
+          elBotonCTA.hidden = true;
+          elReiniciar.hidden = true;
+          elConfirmar.disabled = true;
+
+          renderHorarios(diaElegido);
+        });
+      }
+
+      // Paso 3: confirmar turno
+      elConfirmar.addEventListener('click', function () {
+        if (!diaElegido || !horaElegida) {
+          return;
+        }
+
+        // Agenda ordenada
+        elListaAgenda.innerHTML = '';
+        var item = document.createElement('li');
+        item.innerHTML = '<strong>' + diaElegido + ' — ' + horaElegida + '</strong><br>Paciente: ' + paciente;
+        elListaAgenda.appendChild(item);
+
+        // Recordatorio automático simulado
+        elWhatsapp.innerHTML =
+          'Hola ' + paciente.split(' ')[0] + '! Te recordamos tu turno el ' + diaElegido +
+          ' a las ' + horaElegida + ' en el consultorio. Cualquier cambio, avisanos por acá.' +
+          '<span class="hora">Enviado automáticamente</span>';
+
+        elResultado.hidden = false;
+        elDespues.hidden = false;
+        elBotonCTA.hidden = false;
+        elReiniciar.hidden = false;
+        elConfirmar.disabled = true;
+      });
+
+      // Reiniciar la demo para probarla de nuevo
+      elReiniciar.addEventListener('click', function () {
+        diaElegido = null;
+        horaElegida = null;
+
+        limpiarActivos(elDias);
+        elHorarios.innerHTML = '';
+
+        elPasoHorario.hidden = true;
+        elPasoConfirmar.hidden = true;
+        elResultado.hidden = true;
+        elDespues.hidden = true;
+        elBotonCTA.hidden = true;
+        elReiniciar.hidden = true;
+      });
+    })();
+  </script>
 </body>
 </html>
