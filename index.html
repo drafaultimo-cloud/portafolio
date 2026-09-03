@@ -661,8 +661,14 @@
   <section id="presupuesto">
     <div class="contenedor">
       <h2>Cómo armo un presupuesto</h2>
-      <p>Cada consultorio es distinto, así que no hay un número fijo de catálogo.</p>
-      <p>El presupuesto se conversa en una reunión de 20 minutos, después de que veas la demo, nunca antes.</p>
+      <p>Cada consultorio es distinto: el volumen de pacientes, cuántos datos hay que migrar y qué tan urgente es, cambian el trabajo real.</p>
+      <p>Por eso no tengo un número de catálogo — armar un presupuesto antes de ver tu caso sería inventar un número.</p>
+      <p>Primero te muestro la demo, para que veas en concreto cómo funcionaría en tu consultorio.</p>
+      <p>Recién después de eso, en una reunión de 20 minutos, miramos juntos qué necesitás vos puntualmente.</p>
+      <p>Ahí es donde te cuento cómo queda armado el trabajo y hablamos de la inversión, ya con tu caso sobre la mesa.</p>
+      <p>No hay letra chica ni sorpresas: lo que se conversa en esa reunión es lo que se hace.</p>
+      <p>Es una charla corta y sin compromiso, pensada para que decidas con información real, no con un número genérico.</p>
+      <p>Si te cierra lo que viste en la demo, agendá los 20 minutos y lo charlamos.</p>
     </div>
   </section>
 
@@ -712,7 +718,8 @@
     <div class="contenedor">
       <h2>Dale para ver cómo quedaría esto en tu consultorio.</h2>
       <p>Es una reunión corta, de 20 minutos, sin compromiso.</p>
-      <a href="#" class="boton-cta" id="boton-reunion">Agendá una reunión de 20 minutos</a>
+      <!-- PLACEHOLDER: reemplazá este número por tu WhatsApp real (formato 549 + característica + número, sin espacios ni guiones) -->
+      <a href="https://wa.me/5492976249839" class="boton-cta" id="boton-reunion" target="_blank" rel="noopener">Agendá la reunión de 20 minutos</a>
     </div>
   </section>
 
@@ -724,22 +731,6 @@
       <p>DRM-IA · Río Gallegos, Santa Cruz</p>
     </div>
   </footer>
-
-  <!-- ============================================
-       JS: sin dependencias externas.
-       Por ahora el botón de reunión no tiene link cargado;
-       cuando tengas el link (Calendly, Google Calendar, etc.)
-       se reemplaza el "href" del <a id="boton-reunion">.
-       ============================================ -->
-  <script>
-    // Aviso en consola para recordar que falta cargar el link real del botón
-    document.getElementById('boton-reunion').addEventListener('click', function (evento) {
-      if (this.getAttribute('href') === '#') {
-        evento.preventDefault();
-        console.log('Falta cargar el link real de la reunión en el botón "Agendá una reunión de 20 minutos".');
-      }
-    });
-  </script>
 
   <script>
     // ============================================
