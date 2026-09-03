@@ -26,6 +26,19 @@
     --color-borde: #e2e5ea;
     --radio: 12px;
     --max-ancho: 960px;
+    --sombra: 0 1px 3px rgba(31, 36, 48, 0.07), 0 1px 2px rgba(31, 36, 48, 0.04);
+    --sombra-hover: 0 6px 16px rgba(31, 36, 48, 0.10);
+    --transicion: 0.18s ease;
+  }
+
+  /* Respeta a quien desactivó las animaciones en su sistema */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    * {
+      transition-duration: 0.001ms !important;
+    }
   }
 
   html {
@@ -37,6 +50,17 @@
     background-color: var(--color-fondo);
     color: var(--color-texto);
     line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Resalta el foco al navegar con teclado */
+  a:focus-visible,
+  button:focus-visible,
+  summary:focus-visible {
+    outline: 2px solid var(--color-acento);
+    outline-offset: 2px;
+    border-radius: 4px;
   }
 
   img {
@@ -49,11 +73,11 @@
   .contenedor {
     max-width: var(--max-ancho);
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 clamp(18px, 5vw, 24px);
   }
 
   section {
-    padding: 64px 0;
+    padding: clamp(40px, 7vw, 72px) 0;
   }
 
   section:nth-of-type(even) {
@@ -61,9 +85,10 @@
   }
 
   h2 {
-    font-size: 1.6rem;
+    font-size: clamp(1.35rem, 1.05rem + 1.2vw, 1.6rem);
     color: var(--color-primario);
     margin-bottom: 20px;
+    letter-spacing: -0.01em;
   }
 
   p {
@@ -78,7 +103,7 @@
   header.hero {
     background-color: var(--color-primario);
     color: #ffffff;
-    padding: 56px 0 48px;
+    padding: clamp(40px, 8vw, 56px) 0 clamp(32px, 6vw, 48px);
   }
 
   header.hero .contenedor {
@@ -97,8 +122,10 @@
   }
 
   header.hero h1 {
-    font-size: 2rem;
+    font-size: clamp(1.5rem, 1.1rem + 2vw, 2rem);
+    line-height: 1.22;
     max-width: 620px;
+    letter-spacing: -0.01em;
   }
 
   header.hero p {
@@ -113,6 +140,9 @@
   nav.indice {
     background-color: var(--color-primario-claro);
     border-bottom: 1px solid var(--color-borde);
+    position: sticky;
+    top: 0;
+    z-index: 20;
   }
 
   nav.indice ul {
@@ -124,10 +154,13 @@
   }
 
   nav.indice a {
+    display: inline-block;
     color: var(--color-primario);
     text-decoration: none;
     font-size: 0.92rem;
     font-weight: 600;
+    padding: 4px 2px;
+    transition: color var(--transicion);
   }
 
   nav.indice a:hover {
@@ -149,6 +182,15 @@
     border: 1px solid var(--color-borde);
     border-radius: var(--radio);
     padding: 20px;
+    box-shadow: var(--sombra);
+    transition: box-shadow var(--transicion), transform var(--transicion);
+  }
+
+  @media (hover: hover) {
+    .comparacion .tarjeta:hover {
+      box-shadow: var(--sombra-hover);
+      transform: translateY(-2px);
+    }
   }
 
   .comparacion .tarjeta.si {
@@ -222,7 +264,8 @@
     border: 1px solid var(--color-borde);
     border-radius: var(--radio);
     background-color: var(--color-fondo-alterno);
-    padding: 22px;
+    padding: clamp(16px, 4vw, 22px);
+    box-shadow: var(--sombra);
   }
 
   .demo-paso {
@@ -246,6 +289,9 @@
   }
 
   .demo-chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
     border: 1px solid var(--color-borde);
     background-color: var(--color-fondo);
     color: var(--color-texto);
@@ -253,10 +299,17 @@
     border-radius: 999px;
     font-size: 0.95rem;
     cursor: pointer;
+    transition: border-color var(--transicion), background-color var(--transicion), color var(--transicion), transform var(--transicion);
   }
 
-  .demo-chip:hover {
-    border-color: var(--color-primario);
+  @media (hover: hover) {
+    .demo-chip:hover {
+      border-color: var(--color-primario);
+    }
+  }
+
+  .demo-chip:active {
+    transform: scale(0.97);
   }
 
   .demo-chip.activo {
@@ -281,9 +334,15 @@
     border: none;
     border-radius: 8px;
     padding: 12px 22px;
+    min-height: 44px;
     font-size: 0.98rem;
     font-weight: 600;
     cursor: pointer;
+    transition: opacity var(--transicion), transform var(--transicion);
+  }
+
+  .demo-confirmar:active:not(:disabled) {
+    transform: scale(0.98);
   }
 
   .demo-confirmar:disabled {
@@ -386,6 +445,7 @@
     padding: 16px 18px 16px 52px;
     position: relative;
     color: var(--color-texto-suave);
+    box-shadow: var(--sombra);
   }
 
   .pasos li::before {
@@ -412,8 +472,9 @@
     background-color: var(--color-fondo-alterno);
     border: 1px solid var(--color-borde);
     border-radius: var(--radio);
-    padding: 14px 18px;
+    padding: 4px 18px 14px;
     margin-bottom: 10px;
+    box-shadow: var(--sombra);
   }
 
   .faq summary {
@@ -421,6 +482,8 @@
     font-weight: 600;
     color: var(--color-texto);
     list-style: none;
+    min-height: 44px;
+    padding: 12px 0;
   }
 
   .faq summary::-webkit-details-marker {
@@ -472,10 +535,20 @@
     font-size: 1.05rem;
     border: none;
     cursor: pointer;
+    text-align: center;
+    box-shadow: var(--sombra);
+    transition: opacity var(--transicion), transform var(--transicion), box-shadow var(--transicion);
   }
 
-  .boton-cta:hover {
-    opacity: 0.92;
+  @media (hover: hover) {
+    .boton-cta:hover {
+      opacity: 0.92;
+      box-shadow: var(--sombra-hover);
+    }
+  }
+
+  .boton-cta:active {
+    transform: scale(0.98);
   }
 
   /* ============================================
@@ -496,20 +569,51 @@
      RESPONSIVE: CELULAR
      ============================================ */
   @media (max-width: 640px) {
-    header.hero h1 {
-      font-size: 1.5rem;
-    }
-
-    section {
-      padding: 44px 0;
-    }
-
     .comparacion {
       grid-template-columns: 1fr;
     }
 
+    /* Nav como tira horizontal deslizable, para no amontonar los 7 links */
     nav.indice ul {
-      gap: 4px 12px;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      gap: 18px;
+      padding: 12px 0;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    nav.indice ul::-webkit-scrollbar {
+      display: none;
+    }
+
+    nav.indice a {
+      white-space: nowrap;
+    }
+
+    /* Botones grandes, más fáciles de tocar con el pulgar */
+    .cta-final .boton-cta,
+    .demo-boton {
+      display: block;
+      width: 100%;
+    }
+
+    .demo-widget {
+      padding: 16px;
+    }
+
+    .demo-chips {
+      gap: 8px;
+    }
+  }
+
+  /* ============================================
+     RESPONSIVE: PANTALLAS GRANDES
+     Un poco más de aire en desktop/notebook ancho
+     ============================================ */
+  @media (min-width: 1000px) {
+    :root {
+      --max-ancho: 1040px;
     }
   }
 </style>
